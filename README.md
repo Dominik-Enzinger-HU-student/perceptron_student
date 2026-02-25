@@ -4,9 +4,9 @@
 (c) 2026 Hogeschool Utrecht  
 Auteur: Tijmen Muller (tijmen.muller@hu.nl)
 
-- Studentnummer:
-- Naam:
-- Datum:
+- Studentnummer: 1853447
+- Naam: Dominik Enzinger
+- Datum: 25.02.2026
 
 In deze opdracht gaan we een netwerk van perceptrons programmeren. Doe dit zonder gebruik te maken van frameworks, zoals TensorFlow en PyTorch. 
 
