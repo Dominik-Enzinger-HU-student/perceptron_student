@@ -14,8 +14,8 @@ class Perceptron():
         """Defines the way the perceptron is represented"""
         return f"Perceptron: Weights: {self.weights}"
     
-    def activation_function(self, inputs: list[float]):
-        """The activation function of the perceptron.
+    def output(self, inputs: list[float]):
+        """The output function of the perceptron, using the step function as activation function.
         
         Args:
             inputs (list[float]): A list of inputs. x[0] should be 1.
@@ -52,7 +52,7 @@ class Perceptron():
             target (float): The corresponding target for the training input.
             learning_rate (float): The learning rage (n, eta) of the perceptron.
         """
-        output = self.activation_function(training_input)
+        output = self.output(training_input)
         error = target - output
         for j, _ in enumerate(self.weights):
             delta_weight = learning_rate * error * training_input[j]
@@ -68,7 +68,7 @@ class Perceptron():
         number_of_training_inputs = len(training_inputs)
         sum_squared_errors = 0
         for i, _ in enumerate(training_inputs):
-            output = self.activation_function(training_inputs[i])
+            output = self.output(training_inputs[i])
             error = targets[i] - output
             squared_error = error ** 2
             sum_squared_errors += squared_error
@@ -98,7 +98,7 @@ class PerceptronLayer():
         """Calculates the output of each perceptron in the layer and returns them as a list."""
         output_array = []  # List containing the outputs of the perceptrons
         for perceptron in self.perceptrons:
-            output = perceptron.activation_function(inputs)
+            output = perceptron.output(inputs)
             output_array.append(output)
         return output_array
     
