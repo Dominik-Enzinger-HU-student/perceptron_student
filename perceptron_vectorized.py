@@ -9,7 +9,7 @@ class PerceptronNetworkVectorized():
             activation_function: Function to use as activation function. Else step function is used.
         """
         self.weight_matrices = weight_matrices
-        self.activation_function = np.vectorize(activation_function)  # Is initialized as step_function
+        self.activation_function = np.vectorize(activation_function)  # Gets initialized as step_function
 
     def __str__(self):
         """Defines the way the PerceptronNetwork is represented."""
@@ -22,13 +22,18 @@ class PerceptronNetworkVectorized():
         """Calculates the output of the Network."""
         for matrix in self.weight_matrices:
             results = matrix @ inputs
-            output = self.activation_function(results)  # Applies the activation function to the results of the matrix multiplication.
+            output = self.activation_function(results)  # Applies the activation function to the results of the matrix multiplication. https://www.geeksforgeeks.org/numpy/vectorized-operations-in-numpy/
+            # Check if the shape is a vector or a matrix and add 1's for the calculation with the bias.
+            if len(np.shape(output)) == 1:  # shape returns a touple (rows, columns). if len == 1 then its a vector.
+                output = np.append(1, output)
+            elif len(np.shape(output)) == 2:  # its a matrix.
+                amount = np.shape(output)[1]  # The amount of columns in the matrix.
+                vector_to_add = np.ones(amount)
+                output = np.vstack((vector_to_add, output))  # Thank you Brian.
             inputs = output
-        return output
-    
-    def step_function(self, input):
-        return 1 if input >= 0 else 0  # Every code base needs one one-liner, sorry.
-    
-    def test(self):
-        matrix = np.array([[1, 2, 3], [-0.5, -0.1, -0.7]])
-        print(self.activation_function(matrix))
+        # Check the shape of the output: if output isn't a single number, then remove x[0] the 1's on top of the matrices.
+        if len(np.shape(output)) == 0:
+            return output
+        else:
+            output = np.delete(output, 0, 0)  # Delete the top of the matrix/vector
+            return output
