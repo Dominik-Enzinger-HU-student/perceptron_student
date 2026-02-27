@@ -20,12 +20,22 @@ class Perceptron():
         Args:
             inputs (list[float]): A list of inputs. x[0] should be 1.
         """
+
+        self.check_size(inputs)
         dot_product = sum(inputs[i] * self.weights[i] for i in range(len(inputs)))
         if dot_product >= 0:
             output = 1
         else:
             output = 0
         return output
+    
+    def check_size(self, inputs: list[float]):
+        """Checks if the list of inputs has the same size as the list of weights.
+        Args:
+            inputs (list[flaot]): A list of inputs.
+        """
+        if len(inputs) != len(self.weights):
+            raise Exception(f"Size inputs {(len(inputs))} doens't match size weights {(len(self.weights))}")
     
     def train(self, training_inputs: list[list[float]], targets: list[float], learning_rate: float = 0.1):
         """Trains the perceptrons weights with the given training inputs and expected outputs (targets).
@@ -54,6 +64,7 @@ class Perceptron():
         """
         output = self.output(training_input)
         error = target - output
+        assert training_input[0] == 1, 'assuming first input is bias'
         for j, _ in enumerate(self.weights):
             delta_weight = learning_rate * error * training_input[j]
             self.weights[j] = self.weights[j] + delta_weight
@@ -126,3 +137,7 @@ class PerceptronNetwork():
             outputs = layer.outputs(inputs)            
             inputs = [1] + outputs  # The outputs become the new inputs for the next layer. Prepent a 1 at the start of each new input layer for the calculation with the bias.
         return outputs
+    
+    # numpy stack array gebruiken om de 1 mee te geven.
+
+# [ ]
