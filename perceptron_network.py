@@ -137,7 +137,3 @@ class PerceptronNetwork():
             outputs = layer.outputs(inputs)            
             inputs = [1] + outputs  # The outputs become the new inputs for the next layer. Prepent a 1 at the start of each new input layer for the calculation with the bias.
         return outputs
-    
-    # numpy stack array gebruiken om de 1 mee te geven.
-
-# [ ]
