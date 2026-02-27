@@ -20,7 +20,6 @@ class Perceptron():
         Args:
             inputs (list[float]): A list of inputs. x[0] should be 1.
         """
-
         self.check_size(inputs)
         dot_product = sum(inputs[i] * self.weights[i] for i in range(len(inputs)))
         if dot_product >= 0:
