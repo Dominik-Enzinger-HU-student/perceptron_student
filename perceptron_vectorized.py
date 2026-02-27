@@ -24,16 +24,15 @@ class PerceptronNetworkVectorized():
             results = matrix @ inputs
             output = self.activation_function(results)  # Applies the activation function to the results of the matrix multiplication. https://www.geeksforgeeks.org/numpy/vectorized-operations-in-numpy/
             # Check if the shape is a vector or a matrix and add 1's for the calculation with the bias.
-            if len(np.shape(output)) == 1:  # shape returns a touple (rows, columns). if len == 1 then its a vector.
+            if len(np.shape(output)) == 0:  # Its a single number -> done.
+                return output
+            elif len(np.shape(output)) == 1:  # shape returns a touple (rows, columns). if len == 1 then its a vector.
                 output = np.append(1, output)
-            elif len(np.shape(output)) == 2:  # its a matrix.
-                amount = np.shape(output)[1]  # The amount of columns in the matrix.
-                vector_to_add = np.ones(amount)
+            else:  # its a matrix.
+                n_columns = np.shape(output)[1]  # The number of columns in the matrix.
+                vector_to_add = np.ones(n_columns)
                 output = np.vstack((vector_to_add, output))  # Thank you Brian.
             inputs = output
-        # Check the shape of the output: if output isn't a single number, then remove x[0] the 1's on top of the matrices.
-        if len(np.shape(output)) == 0:
-            return output
-        else:
-            output = np.delete(output, 0, 0)  # Delete the top of the matrix/vector
-            return output
+        # The output isn't a single number -> top row has to be removed.
+        output = np.delete(output, 0, 0)  # Delete the top of the matrix/vector
+        return output

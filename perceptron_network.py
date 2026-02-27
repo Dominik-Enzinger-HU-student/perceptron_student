@@ -1,5 +1,3 @@
-
-
 class Perceptron():
     """The perceptron class."""
     def __init__(self, weights):
